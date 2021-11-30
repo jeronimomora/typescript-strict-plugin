@@ -28,6 +28,10 @@ const getPathToErrorsMap = (tscOutput: string[]): Map<string, string[]> => {
   tscOutput.forEach((error) => {
     const path = resolve(process.cwd(), error.split('(')[0]);
 
+    if (!error.includes('.ts') && !error.includes('.tsx')) {
+      return; // this is not a file, don't add to map
+    }
+
     if (result.has(path)) {
       result.set(path, [...result.get(path)!, error]);
     } else {

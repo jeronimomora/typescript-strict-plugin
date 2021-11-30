@@ -9,7 +9,7 @@ import * as typescript from './typescript';
 const filterOutNodeModulesFiles = (files: string[]): string[] =>
   files.filter((fileName) => !fileName.includes('/node_modules/'));
 
-const getFilesCheckedByTs = async (): Promise<string[]> => {
+export const getFilesCheckedByTs = async (): Promise<string[]> => {
   const filesCheckedByTs = await typescript.listFilesOnly();
   const filePaths = filesCheckedByTs.split(/\r?\n/).map(getPosixFilePath);
 
