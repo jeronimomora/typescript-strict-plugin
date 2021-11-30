@@ -52,16 +52,19 @@ const main = async () => {
     for (const [key, value] of errorsMap.entries()) {
         relativeErrorsMap.set(path_1.default.relative('.', key), value);
     }
+    const filesRemaining = [];
     // Let's try to automatically add //@ts-strict to the top of files without errors
     for (const fileWithoutTsComment of filesWithoutTsStrictComment) {
         // Skip files that had compilation errors
         if (relativeErrorsMap.has(fileWithoutTsComment)) {
+            filesRemaining.push(fileWithoutTsComment);
             continue;
         }
         // Otherwise, add the comment
         addTsStrictCommenToFile(fileWithoutTsComment);
         console.log(`✅ - Added strict comment to ${chalk_1.default.bold(fileWithoutTsComment)}`);
     }
+    console.log({ filesRemaining });
     console.log('Done.');
 };
 exports.main = main;
